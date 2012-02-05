@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<div class="posts-list">
+
+  <table class="posts">
+
+    <colgroup>
+      <col class='date'/>
+      <col class='title'/>
+      <col class='teaser'>
+      <col class='category'/>
+    </colgroup>
+
+    <tbody>
+      {% for post in site.posts %}
+      <tr>
+        <td class='date'><a href="{{ post.url }}">{{ post.date | date: "%d %B %Y" }}</a></td>
+        <td class='title'><a href="{{ post.url }}">{{ post.title }}</a></td>
+        <td class='teaser'><a href="{{ post.url }}">{{ post.description }}</a></td>
+        <td class='category'><a href="{{ post.url }}">{{ post.categories }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+</div>
