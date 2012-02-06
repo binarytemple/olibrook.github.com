@@ -5,11 +5,11 @@
 body {
     line-height: 1.5;
     font-family: Georgia, serif;
+    font-size: 1.1em;
     color: $body_font_color;
     background-color: $body_bg;
     margin: 0 auto;
 }
-
 
 h1, h2, h3, h4 , h5 {
     color: $heading_color;
@@ -77,15 +77,11 @@ ul {
 
 a {
     text-decoration: none;
-    color: $header_bg;
-}
-
-a:hover, a:visited:hover {
     color: #1E7385;
 }
 
-a:visited {
-    color: $header_bg;
+a:hover, a:visited:hover {
+    color: white;
 }
 
 blockquote {
@@ -118,33 +114,35 @@ table caption {
 
 .section {
     @include container;
-    padding-top: 1em;
-    padding-bottom: 1em;
 }
 
 #header, #footer {
-    background-color: $header_bg;
-    border-left: 1em solid $header_bg;
-    border-right: 1em solid $header_bg;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 
 #header {
 
     .logo-container {
-        @include column(6);
+        @include column(12);
         @include prepend(1);
 
         #logo {
             color: white;
-            font-size: 2em;
+            font-size: 4em;
             text-decoration: none;
             padding: 1em 0;
+
+            .com {
+              font-size: 0.3em;
+              vertical-align: super;
+            }
         }
     }
 
     #navigation {
         @include column(6, true);
-        @include prepend(10);
+        @include prepend(2);
         @include clearfix;
 
         font-style: italic;
@@ -191,37 +189,34 @@ table caption {
     }
 }
 
-#main.section {
-    background-color: white;
-    border-left: 1em solid white;
-    border-right: 1em solid white;
+.page-nav {
+  @include column(22, true);
+  @include prepend(1);
+  @include append(1);
+
+  .links {
+    padding-bottom: 0.25em;
+    @include clearfix;
+
+    span.previous {
+      display: inline;
+      float: left;
+    }
+
+    span.next {
+      display: inline;
+      float: right;
+    }
+  }
 }
+
 
 .post {
     @include column(16, true);
-    @include prepend(1);
-    @include append(7);
+    @include prepend(4);
+    @include append(4);
 
-    h1 {
-        margin-top: 1.5em;
-    }
 
-    .page-nav {
-        border-top: 1px solid #555;
-        padding-top: 0.25em;
-        margin-top: 4em;
-        @include clearfix;
-
-        span.previous {
-            display: inline;
-            float: left;
-        }
-
-        span.next {
-            display: inline;
-            float: right;
-        }
-    }
 
     p.description {
         font-size: 1.25em;
@@ -265,22 +260,22 @@ table caption {
 
     tr {
         border-collapse: collapse;
-        border-bottom: 1px solid #ccc;
-        border-top: 1px solid #ccc;
+        border-bottom: 1px solid $header_bg;
+        border-top: 1px solid $header_bg;
     }
 
     tr:hover {
-        background-color: #eaeaea;
+        background-color: $header_bg;
     }
 
     a, a:active, a:visited, a:hover {
         text-decoration: none;
         display: block;
-        color: $header_bg !important;
+        color: $body_font_color !important;
     }
 
     thead tr:hover {
-        background-color: inherit;
+        background-color: $header_bg;
     }
 
     td {

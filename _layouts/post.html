@@ -1,6 +1,7 @@
 ---
-layout: default
+layout: archive
 ---
+
 
 <div class="post">
 
@@ -12,21 +13,23 @@ layout: default
     {{ content }}
   </div>
 
+</div>
 
-  <div class="page-nav">
+<div class="page-nav">
+  <div class="links">
 
     {% if page.previous %}
     <span class="previous">
-      <a href="{{ page.previous.url }}">« Older Entries</a>
+      <a href="{{ page.previous.url }}">« Older</a>
     </span>
     {% endif %}
 
     {% if page.next %}
     <span class="next">
-      <a href="{{ page.next.url }} ">Newer Entries »</a>
+      <a href="{{ page.next.url }} ">Newer »</a>
     </span>
     {% endif %}
 
   </div>
-
 </div>
+
