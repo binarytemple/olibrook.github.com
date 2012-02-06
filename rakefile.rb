@@ -1,4 +1,4 @@
-task :default => [:"deploy"]
+task :default => [:"site:rsync"]
 
 namespace :site do
 
