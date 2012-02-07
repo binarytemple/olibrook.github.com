@@ -1,6 +1,8 @@
 ---
 title: Ford Blue Oval Card
-description: A total redesign of Imagination's online work for Ford
+description: |
+  An ambitious reboot of Imagination's work for Ford &mdash; online
+  and off
 
 layout: post
 categories: [Work]

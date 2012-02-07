@@ -1,6 +1,6 @@
 ---
 title: Gillespies Architects
-description: Unique Flash website for this landscape Architecture practice.
+description: Unique Flash website for this landscape Architecture practice
 
 layout: post
 categories: [Work]

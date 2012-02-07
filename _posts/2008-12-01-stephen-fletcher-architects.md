@@ -1,6 +1,6 @@
 ---
 title: Stephen Fletcher Architects
-description: Flash microsite for the London architecture practice.
+description: Flash microsite for the London architecture practice
 
 layout: post
 categories: [Work]

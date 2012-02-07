@@ -1,6 +1,6 @@
 ---
 title: Simon Dance Design
-description: Minimalist website for this London designer.
+description: Minimalist website for this London designer
 
 layout: post
 categories: [Work]

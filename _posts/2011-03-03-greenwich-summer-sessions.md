@@ -1,6 +1,6 @@
 ---
 title: Greenwich Summer Sessions Website
-description: Quirky-looking website for this new concert series held in the grounds of the Old Royal Naval College.
+description: Quirky-looking website for this new concert series held in the grounds of the Old Royal Naval College
 
 layout: post
 categories: [Work]

@@ -3,7 +3,7 @@
 @import "blueprint/liquid";
 
 body {
-    line-height: 1.5;
+    line-height: 1.6;
     font-family: Georgia, serif;
     font-size: 1.1em;
     color: $body_font_color;
@@ -135,7 +135,6 @@ table caption {
 
             .com {
               font-size: 0.3em;
-              vertical-align: super;
             }
         }
     }
@@ -213,10 +212,8 @@ table caption {
 
 .post {
     @include column(16, true);
-    @include prepend(4);
-    @include append(4);
-
-
+    @include prepend(1);
+    @include append(7);
 
     p.description {
         font-size: 1.25em;
@@ -224,9 +221,11 @@ table caption {
     }
 
     p.date {
-        font-size: 1.2em;
         display: block;
         margin: 0;
+    }
+
+    h1 {
         color: #144D59;
     }
 }
@@ -303,4 +302,16 @@ table caption {
     td.title {
         font-size: 1.5em;
     }
+}
+
+.about {
+
+  img {
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+
+  h2 {
+    clear: left;
+  }
 }

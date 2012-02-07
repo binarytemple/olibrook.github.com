@@ -1,6 +1,6 @@
 ---
 title: Allies and Morrison Architects
-description: New website for Allies and Morrison.
+description: New website for Allies and Morrison
 
 layout: post
 categories: [Work]
