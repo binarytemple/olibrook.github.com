@@ -49,4 +49,4 @@ More...
 -------
 
 I have a full CV knocking around. If you're interested, get in touch at
-olibrook (at) gmail.com.
+olibrook (at) gmail (dot) com.

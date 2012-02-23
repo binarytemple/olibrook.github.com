@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      body {
+        background-color: #222;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body onload="start()">
+
+    <h1>Canvas Demo 1</h1>
+    <p>
+      A very basic particle demo I knocked up one Thursday afternoon
+      using the HTML5 canvas element.
+    </p>
+
+    <canvas id="canvas" width="500" height="300">
+      Your browser does not support the canvas element.
+    </canvas>
+  </body>
+
+  <script type="text/javascript" charset="utf-8">
+
+    function start(){
+
+      NUM_PARTICLES = 10;
+      CANVAS_WIDTH = 500;
+      CANVAS_HEIGHT = 300;
+
+      function Particle() {
+        this.DRAW_HISTORY = 40;
+        this.HISTORY_DECAY = 0.98;
+
+        this.x = Math.random() * CANVAS_WIDTH;
+        this.y = Math.random() * CANVAS_HEIGHT;
+        this.vx = Math.random() * 5;
+        this.vy = Math.random() * 5;
+        this.radius = (Math.random() * 10) + 5;
+        this.strokeStyle = "#AB0";
+        this.history = [];
+      }
+
+      Particle.prototype.update = function() {
+          this.vx = this.x < 0 || this.x > CANVAS_WIDTH ? this.vx * -1 : this.vx;
+          this.vy = this.y < 0 || this.y > CANVAS_HEIGHT ? this.vy * -1 : this.vy;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.updateHistory();
+      }
+
+      Particle.prototype.updateHistory = function() {
+        if(this.history.length > this.DRAW_HISTORY) {
+          this.history.shift();
+        }
+        this.history.push({x: this.x, y: this.y});
+      }
+
+      Particle.prototype.render = function(ctx) {
+          var radius = this.radius;
+
+          ctx.beginPath();
+
+          ctx.strokeStyle = ctx.fillStyle = this.strokeStyle;
+          ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI, false);
+          ctx.closePath();
+          ctx.fill();
+
+
+          for(var i = this.history.length - 1; i >= 0; i--) {
+            radius = radius * this.HISTORY_DECAY;
+            ctx.beginPath();
+            ctx.arc(this.history[i].x, this.history[i].y, radius, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+          }
+
+      }
+
+      var ctx = document.getElementById("canvas").getContext("2d"),
+          particles = [];
+
+      for(var i=0; i < NUM_PARTICLES; i++) {
+        particles.push(new Particle());
+      }
+
+      function timeSlice() {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        for(var i=0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].render(ctx);
+        }
+      }
+      setInterval(timeSlice, 20);
+    }
+
+  </script>
+</html>
