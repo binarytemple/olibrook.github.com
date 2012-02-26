@@ -22,4 +22,5 @@ or two on a Thursday afternoon:
 
 [HTML Canvas Demo 2](/experiments/canvas-demo-2.html)
 
+[HTML Canvas Demo 3](/experiments/canvas-demo-3.html)
 
