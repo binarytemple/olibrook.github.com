@@ -89,16 +89,16 @@ var OB = (function(OB) {
       }
 
 
-      function Particle() {
+      function Particle(x, y, velocity) {
 
         this.red   = 0xFF;
         this.green = 0xFF;
         this.blue  = 0xFF;
 
-        this.x = Math.random() * CANVAS_WIDTH;
-        this.y = Math.random() * CANVAS_HEIGHT;
+        this.y = y;
+        this.x = x;
 
-        this.velocity = new Vector(0, 0);
+        this.velocity = velocity;
       }
 
 
@@ -111,13 +111,12 @@ var OB = (function(OB) {
             vector.setFromPoints(this.x, this.y, fields[i].x, fields[i].y);
             vector.normalize();
 
-
             this.velocity.x = this.velocity.x + (vector.x * fields[i].force);
             this.velocity.y = this.velocity.y + (vector.y * fields[i].force);
           };
 
-          this.x = this.x + (this.velocity.x * seconds);
-          this.y = this.y + (this.velocity.y * seconds);
+          this.x = this.x + (this.velocity.x); // * seconds);
+          this.y = this.y + (this.velocity.y); // * seconds);
       }
 
 
@@ -139,20 +138,24 @@ var OB = (function(OB) {
 
         this.particles = [];
         this.fields = [];
+        this.emitters = [];
 
         this.lastRender = 0;
 
         this.canvas = canvas;
         this.ctx = ctx;
 
-        for (var i = 0; i < this.MAX_PARTICLES; i++) {
-          var p = new Particle();
-          this.particles.push(p);
-        };
+        // for (var i = 0; i < this.MAX_PARTICLES; i++) {
+          // var p = new Particle(Math.random() * CANVAS_WIDTH, Math.random() * CANVAS_HEIGHT, new Vector(0, 0));
+          // this.particles.push(p);
+        // };
+
+        // this.emitters.push(new Emitter(700, 300, 2 * Math.PI, 0, 0, 2));
+        this.emitters.push(new Emitter(HALF_WIDTH, HALF_HEIGHT, 2 * Math.PI, 0, Math.PI, 2));
 
 
-        this.fields.push(new Field(HALF_WIDTH - 300, HALF_HEIGHT, 1));
-        this.fields.push(new Field(HALF_WIDTH + 300, HALF_HEIGHT, 1));
+        this.fields.push(new Field(HALF_WIDTH - 300, HALF_HEIGHT, 0.1));
+        this.fields.push(new Field(HALF_WIDTH + 300, HALF_HEIGHT, 0.1));
       }
 
 
@@ -173,12 +176,46 @@ var OB = (function(OB) {
         for(var i=0; i < this.fields.length; i++) {
           this.ctx.fillRect(this.fields[i].x, this.fields[i].y, 2, 2);
         }
+
+        for (var i = 0; i < this.emitters.length; i++) {
+          this.particles = this.particles.concat(this.emitters[i].createParticles());
+        };
+
       }
+
+
+      function Emitter(x, y, angle, rate, spread, force) {
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.rate = rate;
+        this.spread = spread;
+        this.force = force;
+      }
+
+
+      Emitter.prototype.createParticles = function() {
+        var xVel,
+            yVel,
+            numToEmit = ~~ ((this.spread / 2 * Math.PI) * 10);
+            halfSpread = this.spread / 2,
+            newParticles = [];
+
+        // Emit 36 particles at most, when spread is set to (2 * Math.PI)
+        for (var i = 0; i < numToEmit; i++) {
+          xVel = Math.cos((this.angle - halfSpread) + (i/numToEmit) * this.spread) * this.force,
+          yVel = Math.sin((this.angle - halfSpread) + (i/numToEmit) * this.spread) * this.force;
+          newParticles.push(new Particle(this.x, this.y, new Vector(xVel, yVel)));
+        };
+        return newParticles
+      }
+
 
       OB.Vector = Vector;
       OB.Field = Field;
       OB.Particle = Particle;
       OB.Universe = Universe;
+      OB.Emitter = Emitter;
 
   return OB;
 
