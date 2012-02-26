@@ -1,5 +1,5 @@
 ---
-title: Getting to grips with HTML5
+title: Getting to grips with HTML5 - Canvas
 description: Time to start getting my HTML5 skills up to scratch, starting with the canvas
 
 layout: post
@@ -19,3 +19,7 @@ And so, here's the first of my little experiments, knocked up in an hour
 or two on a Thursday afternoon:
 
 [HTML Canvas Demo 1](/experiments/canvas-demo-1.html)
+
+[HTML Canvas Demo 2](/experiments/canvas-demo-2.html)
+
+

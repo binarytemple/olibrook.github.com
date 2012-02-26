@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <style type="text/css" media="screen">
+
+      body {
+        background-color: #222;
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas {
+        display: block;
+      }
+
+    </style>
+  </head>
+
+  <body onload="init()"></body>
+
+  <script type="text/javascript" charset="utf-8">
+
+    window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              window.oRequestAnimationFrame      ||
+              window.msRequestAnimationFrame     ||
+              function(callback, element){
+                window.setTimeout(callback, 1000 / 60);
+              };
+      })();
+
+
+    var CANVAS_WIDTH = window.innerWidth,
+        CANVAS_HEIGHT = window.innerHeight,
+        HALF_WIDTH = window.innerWidth / 2,
+        HALF_HEIGHT = window.innerHeight / 2,
+
+        canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d'),
+
+        particles = [],
+        NUM_PARTICLES = 20;
+
+
+    function init() {
+      container = document.createElement('div');
+      document.body.appendChild( container );
+
+      container.appendChild(canvas);
+      canvas.width = CANVAS_WIDTH;
+      canvas.height = CANVAS_HEIGHT;
+
+      function Particle() {
+        this.DRAW_HISTORY = 40;
+        this.HISTORY_DECAY = 0.98;
+
+        this.x = Math.random() * CANVAS_WIDTH;
+        this.y = Math.random() * CANVAS_HEIGHT;
+        this.vx = Math.random() * 200;
+        this.vy = Math.random() * 200;
+        this.radius = (Math.random() * 10) + 5;
+        this.strokeStyle = '#' + Math.round(Math.random() * 0xFFFFFF).toString(16);
+        this.history = [];
+      }
+
+      Particle.prototype.update = function(diff) {
+          var seconds = diff / 1000;
+          this.vx = this.x < 0 || this.x > CANVAS_WIDTH ? this.vx * -1 : this.vx;
+          this.vy = this.y < 0 || this.y > CANVAS_HEIGHT ? this.vy * -1 : this.vy;
+          this.x += this.vx * seconds;
+          this.y += this.vy * seconds;
+          this.updateHistory();
+      }
+
+
+      Particle.prototype.updateHistory = function() {
+        if(this.history.length > this.DRAW_HISTORY) {
+          this.history.shift();
+        }
+        this.history.push({x: this.x, y: this.y});
+      }
+
+
+      Particle.prototype.render = function(ctx) {
+          var radius = this.radius;
+
+          ctx.beginPath();
+
+          ctx.strokeStyle = ctx.fillStyle = this.strokeStyle;
+          ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI, false);
+          ctx.closePath();
+          ctx.fill();
+
+          for(var i = this.history.length - 1; i >= 0; i--) {
+            radius = radius * this.HISTORY_DECAY;
+            ctx.beginPath();
+            ctx.arc(this.history[i].x, this.history[i].y, radius, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+          }
+      }
+
+
+      for(var i=0; i < NUM_PARTICLES; i++) {
+        particles.push(new Particle());
+      }
+
+
+      var lastRender = (new Date).getTime(),
+          diff,
+          time;
+
+
+      function timeSlice() {
+        time = (new Date).getTime();
+        diff = time - lastRender;
+        lastRender =  time;
+
+        console.log(diff);
+
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        for(var i=0; i < particles.length; i++) {
+          particles[i].update(diff);
+          particles[i].render(ctx);
+        }
+        requestAnimFrame(timeSlice);
+      }
+      timeSlice();
+    }
+
+  </script>
+</html>
